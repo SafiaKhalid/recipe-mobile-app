@@ -1,8 +1,11 @@
+import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 const Home = () => {
+    const navigation = useNavigation();
+
     const addRecipe = () => {
-        console.log('add recipe');
+        navigation.navigate('Add');
     };
 
     return (
