@@ -87,7 +87,7 @@ const AddRecipe = () => {
                 description: undefined,
                 notes: undefined,
             });
-
+            setValue([]);
             setSubmitted(true);
             setError(undefined);
             setTimeout(() => {
@@ -97,8 +97,7 @@ const AddRecipe = () => {
     };
 
     useEffect(() => {
-        console.log('value: ', value);
-        console.log('value length: ', value.length);
+        setNewRecipe({ ...newRecipe, categories: value });
     }, [value]);
 
     return (
