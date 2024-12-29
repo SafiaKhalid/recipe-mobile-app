@@ -45,6 +45,12 @@ const AddRecipe = () => {
             setTimeout(() => {
                 setError(undefined);
             }, 2000);
+        } else if (newRecipe.servings && !Number(newRecipe.servings)) {
+            setError(undefined);
+            setError(`Servings isn't an integer`);
+            setTimeout(() => {
+                setError(undefined);
+            }, 2000);
         } else {
             console.log('Submitted newRecipe: ', newRecipe);
             setNewRecipe({
