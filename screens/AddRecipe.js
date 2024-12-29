@@ -19,6 +19,16 @@ const AddRecipe = () => {
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState(undefined);
 
+    /* const tags = [
+        'Breakfast',
+        'Lunch',
+        'Dinner',
+        'Dessert',
+        'Snacks',
+        'Drinks',
+        'Other',
+    ]; */
+
     const formSubmit = () => {
         setSubmitted(false);
         if (!newRecipe.name) {
@@ -88,6 +98,9 @@ const AddRecipe = () => {
                     value={newRecipe.name}
                     inputMode="text"
                 />
+            </View>
+            <View>
+                <Text>Categories (required)</Text>
             </View>
             <View>
                 <Text>Prep Time</Text>
