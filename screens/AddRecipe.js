@@ -17,30 +17,57 @@ const AddRecipe = () => {
         notes: undefined,
     });
     const [submitted, setSubmitted] = useState(false);
+    const [error, setError] = useState(undefined);
 
     const formSubmit = () => {
         setSubmitted(false);
-        console.log('Submitted newRecipe: ', newRecipe);
-        setNewRecipe({
-            name: undefined,
-            prep_time: {
-                hr: null,
-                min: null,
-            },
-            cook_time: {
-                hr: null,
-                min: null,
-            },
-            servings: null,
-            description: undefined,
-            notes: undefined,
-        });
+        if (!newRecipe.name) {
+            setError(undefined);
+            setError('Recipe name is required');
+            setTimeout(() => {
+                setError(undefined);
+            }, 2000);
+        } else if (
+            (newRecipe.prep_time.hr && !Number(newRecipe.prep_time.hr)) ||
+            (newRecipe.prep_time.min && !Number(newRecipe.prep_time.min))
+        ) {
+            setError(undefined);
+            setError(`Prep time isn't an integer`);
+            setTimeout(() => {
+                setError(undefined);
+            }, 2000);
+        } else if (
+            (newRecipe.cook_time.hr && !Number(newRecipe.cook_time.hr)) ||
+            (newRecipe.cook_time.min && !Number(newRecipe.cook_time.min))
+        ) {
+            setError(undefined);
+            setError(`Prep time isn't an integer`);
+            setTimeout(() => {
+                setError(undefined);
+            }, 2000);
+        } else {
+            console.log('Submitted newRecipe: ', newRecipe);
+            setNewRecipe({
+                name: undefined,
+                prep_time: {
+                    hr: null,
+                    min: null,
+                },
+                cook_time: {
+                    hr: null,
+                    min: null,
+                },
+                servings: null,
+                description: undefined,
+                notes: undefined,
+            });
 
-        setSubmitted(true);
-
-        setTimeout(() => {
-            setSubmitted(false);
-        }, 2000);
+            setSubmitted(true);
+            setError(undefined);
+            setTimeout(() => {
+                setSubmitted(false);
+            }, 2000);
+        }
     };
 
     return (
@@ -149,6 +176,7 @@ const AddRecipe = () => {
             </View>
             <Button onPress={formSubmit} title="Add Recipe" />
             {submitted && <Text>New recipe added!</Text>}
+            {error && <Text>{error}</Text>}
         </View>
     );
 };
