@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, View, Button } from 'react-native';
+import { StyleSheet, View, Text, Button } from 'react-native';
 
 const Home = () => {
     const navigation = useNavigation();
