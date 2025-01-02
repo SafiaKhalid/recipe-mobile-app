@@ -2,12 +2,7 @@ import { Text, TextInput, View, Button } from 'react-native';
 
 const MultiInput = ({ fields, setFields }) => {
     const handleChange = (e, index) => {
-        console.log('e: ', e);
-        console.log('e.item: ', e.item);
-        console.log('index: ', index);
-
         let newFields = [...fields];
-        console.log('newFields: ', newFields);
 
         newFields[index].item = e;
         setFields(newFields);

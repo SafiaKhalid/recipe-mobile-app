@@ -18,6 +18,7 @@ const AddRecipe = () => {
         },
         servings: null,
         description: undefined,
+        ingredients: [],
         notes: undefined,
     });
     const [submitted, setSubmitted] = useState(false);
@@ -73,7 +74,13 @@ const AddRecipe = () => {
             setTimeout(() => {
                 setError(undefined);
             }, 2000);
-        } else {
+        } /*  else if (ingredientFields.length < 1) {
+            setError(undefined);
+            setError(`Add at least one ingredient`);
+            setTimeout(() => {
+                setError(undefined);
+            }, 2000);
+        } */ else {
             console.log('Submitted newRecipe: ', newRecipe);
             setNewRecipe({
                 name: undefined,
@@ -88,8 +95,10 @@ const AddRecipe = () => {
                 },
                 servings: null,
                 description: undefined,
+                ingredients: [],
                 notes: undefined,
             });
+            setIngredientFields([]);
             setValue([]);
             setSubmitted(true);
             setError(undefined);
@@ -102,6 +111,14 @@ const AddRecipe = () => {
     useEffect(() => {
         setNewRecipe({ ...newRecipe, categories: value });
     }, [value]);
+
+    useEffect(() => {
+        setNewRecipe({
+            ...newRecipe,
+            ingredients: Object.values(ingredientFields),
+        });
+        /* console.log('ingredientFields: ', ingredientFields); */
+    }, [ingredientFields]);
 
     return (
         <View>
@@ -212,7 +229,7 @@ const AddRecipe = () => {
                 />
             </View>
             <View>
-                <Text>Ingredients</Text>
+                <Text>Ingredients (required)</Text>
                 <MultiInput
                     fields={ingredientFields}
                     setFields={setIngredientFields}
