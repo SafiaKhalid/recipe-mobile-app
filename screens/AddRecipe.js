@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
+import MultiInput from '../components/MultiInput';
+
 const AddRecipe = () => {
     const [newRecipe, setNewRecipe] = useState({
         name: undefined,
@@ -31,6 +33,7 @@ const AddRecipe = () => {
     ]);
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState([]);
+    const [ingredientFields, setIngredientFields] = useState([]);
 
     const formSubmit = () => {
         setSubmitted(false);
@@ -128,7 +131,6 @@ const AddRecipe = () => {
                     multiple={true}
                     min={0}
                     max={7}
-                    /* mode="badge" */
                 />
             </View>
             <View>
@@ -207,6 +209,13 @@ const AddRecipe = () => {
                     inputMode="text"
                     multiline={true}
                     numberOfLines={4}
+                />
+            </View>
+            <View>
+                <Text>Ingredients</Text>
+                <MultiInput
+                    fields={ingredientFields}
+                    setFields={setIngredientFields}
                 />
             </View>
             <View>
