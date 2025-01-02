@@ -1,6 +1,6 @@
 import { Text, TextInput, View, Button } from 'react-native';
 
-const MultiInput = ({ fields, setFields }) => {
+const MultiInput = ({ fields, setFields, numbered }) => {
     const handleChange = (e, index) => {
         let newFields = [...fields];
 
@@ -23,8 +23,9 @@ const MultiInput = ({ fields, setFields }) => {
             {fields.map((e, index) => {
                 return (
                     <View key={index}>
+                        {numbered && <Text>{index + 1}</Text>}
                         <TextInput
-                            placeholder="Ingredient"
+                            placeholder={numbered ? `Method` : `Ingredients`}
                             value={e.item || ''}
                             onChangeText={(e) => handleChange(e, index)}
                         />
@@ -35,7 +36,10 @@ const MultiInput = ({ fields, setFields }) => {
                     </View>
                 );
             })}
-            <Button onPress={addField} title="Add Ingrdient" />
+            <Button
+                onPress={addField}
+                title={numbered ? `Add step` : `Add ingredient`}
+            />
         </View>
     );
 };
