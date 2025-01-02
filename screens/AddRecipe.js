@@ -74,13 +74,13 @@ const AddRecipe = () => {
             setTimeout(() => {
                 setError(undefined);
             }, 2000);
-        } /*  else if (ingredientFields.length < 1) {
+        } else if (ingredientFields.length < 1) {
             setError(undefined);
             setError(`Add at least one ingredient`);
             setTimeout(() => {
                 setError(undefined);
             }, 2000);
-        } */ else {
+        } else {
             console.log('Submitted newRecipe: ', newRecipe);
             setNewRecipe({
                 name: undefined,
@@ -117,7 +117,6 @@ const AddRecipe = () => {
             ...newRecipe,
             ingredients: Object.values(ingredientFields),
         });
-        /* console.log('ingredientFields: ', ingredientFields); */
     }, [ingredientFields]);
 
     return (
