@@ -1,6 +1,8 @@
 import React, { useContext, useReducer } from 'react';
 import * as SQLite from 'expo-sqlite';
 
+import { reducer, defaultState } from './reducer';
+
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
@@ -12,12 +14,14 @@ const AppProvider = ({ children }) => {
             await db.execAsync(
                 'CREATE TABLE IF NOT EXISTS recipes (id INTEGER PRIMARY KEY AUTOINCREMENT, recipeObject TEXT NOT NULL)'
             );
-            const rows = await db.getAllAsync('SELECT id, name FROM names');
+            const rows = await db.getAllAsync(
+                'SELECT id, recipeObject FROM recipes'
+            );
             console.log('rows: ', rows);
 
             dispatch({ type: 'INIT_DB', payload: rows });
         } catch (error) {
-            console.error(error);
+            console.error('error:', error);
         }
     };
 

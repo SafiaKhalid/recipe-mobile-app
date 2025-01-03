@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { createStaticNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import { AppProvider } from './context';
 import Home from './screens/Home';
 import AddRecipe from './screens/AddRecipe';
 
@@ -41,7 +42,11 @@ const RootStack = createNativeStackNavigator({
 const Navigation = createStaticNavigation(RootStack);
 
 export default function App() {
-    return <Navigation />;
+    return (
+        <AppProvider>
+            <Navigation />
+        </AppProvider>
+    );
 }
 
 const styles = StyleSheet.create({
