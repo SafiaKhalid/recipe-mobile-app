@@ -13,7 +13,7 @@ const Home = () => {
     }, []);
 
     useEffect(() => {
-        console.log('recipes reducer: ', recipes);
+        console.log('Recipes reducer: ', recipes);
     }, [recipes]);
 
     const addRecipeHandle = () => {
