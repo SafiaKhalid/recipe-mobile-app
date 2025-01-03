@@ -5,12 +5,16 @@ import { StyleSheet, View, Text, Button } from 'react-native';
 import { useGlobalContext } from '../context';
 
 const Home = () => {
-    const { initDB } = useGlobalContext();
+    const { initDB, recipes } = useGlobalContext();
     const navigation = useNavigation();
 
     useEffect(() => {
         initDB();
     }, []);
+
+    useEffect(() => {
+        console.log('recipes reducer: ', recipes);
+    }, [recipes]);
 
     const addRecipeHandle = () => {
         navigation.navigate('Add');

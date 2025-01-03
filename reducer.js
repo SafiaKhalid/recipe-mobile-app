@@ -5,9 +5,11 @@ const defaultState = {
 const reducer = (state, action) => {
     switch (action.type) {
         case 'INIT_DB':
-            return { ...state, recipes: [action.payload] };
+            return { ...state, recipes: [...action.payload] };
         case 'ADD_RECIPE':
-            return { ...state };
+            console.log('Recipe added to state: ', action.payload);
+
+            return { ...state, recipes: [...state.recipes, action.payload] };
         default:
             throw new Error('No matching type');
     }

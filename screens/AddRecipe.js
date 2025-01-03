@@ -10,8 +10,10 @@ import {
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import MultiInput from '../components/MultiInput';
+import { useGlobalContext } from '../context';
 
 const AddRecipe = () => {
+    const { addRecipe } = useGlobalContext();
     const [newRecipe, setNewRecipe] = useState({
         name: undefined,
         categories: [],
@@ -96,6 +98,7 @@ const AddRecipe = () => {
                 setError(undefined);
             }, 2000);
         } else {
+            addRecipe(newRecipe);
             console.log('Submitted newRecipe: ', newRecipe);
             setNewRecipe({
                 name: undefined,
@@ -115,6 +118,7 @@ const AddRecipe = () => {
                 notes: undefined,
             });
             setIngredientFields([]);
+            setMethodFields([]);
             setValue([]);
             setSubmitted(true);
             setError(undefined);
@@ -171,6 +175,7 @@ const AddRecipe = () => {
                         multiple={true}
                         min={0}
                         max={7}
+                        listMode="SCROLLVIEW"
                     />
                 </View>
                 <View>

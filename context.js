@@ -18,15 +18,37 @@ const AppProvider = ({ children }) => {
                 'SELECT id, recipeObject FROM recipes'
             );
             console.log('rows: ', rows);
+            await db.closeAsync();
+            let recipeList = [];
+            if (rows.length > 0) {
+                rows.forEach((row) => {
+                    recipeList.push(JSON.parse(row.recipeObject));
+                });
+            }
+            dispatch({ type: 'INIT_DB', payload: recipeList });
+        } catch (error) {
+            console.error('error:', error);
+        }
+    };
 
-            dispatch({ type: 'INIT_DB', payload: rows });
+    const addRecipe = async (newRecipe) => {
+        try {
+            const db = await SQLite.openDatabaseAsync('recipedb');
+            await db.runAsync(
+                'INSERT INTO recipes (recipeObject) VALUES (?)',
+                JSON.stringify(newRecipe)
+            );
+            await db.closeAsync();
+            dispatch({ type: 'ADD_RECIPE', payload: newRecipe });
         } catch (error) {
             console.error('error:', error);
         }
     };
 
     return (
-        <AppContext.Provider value={{ initDB }}>{children}</AppContext.Provider>
+        <AppContext.Provider value={{ ...state, initDB, addRecipe }}>
+            {children}
+        </AppContext.Provider>
     );
 };
 
