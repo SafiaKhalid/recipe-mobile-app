@@ -45,8 +45,19 @@ const AppProvider = ({ children }) => {
         }
     };
 
+    const clearDB = async () => {
+        try {
+            const db = await SQLite.openDatabaseAsync('recipedb');
+            await db.execAsync('DROP TABLE IF EXISTS recipes');
+            await db.closeAsync();
+            dispatch({ type: 'CLEAR_DB' });
+        } catch (error) {
+            console.error('error:', error);
+        }
+    };
+
     return (
-        <AppContext.Provider value={{ ...state, initDB, addRecipe }}>
+        <AppContext.Provider value={{ ...state, initDB, addRecipe, clearDB }}>
             {children}
         </AppContext.Provider>
     );

@@ -10,6 +10,8 @@ const reducer = (state, action) => {
         case 'ADD_RECIPE':
             console.log('Recipe added to db');
             return { ...state, recipes: [...state.recipes, action.payload] };
+        case 'CLEAR_DB':
+            return { ...state, recipes: [] };
         default:
             throw new Error('No matching type');
     }
