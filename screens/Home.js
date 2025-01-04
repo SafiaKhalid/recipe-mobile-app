@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, Button, FlatList } from 'react-native';
 
 import { useGlobalContext } from '../context';
 import RecipeCard from '../components/RecipeCard';
@@ -30,10 +30,11 @@ const Home = () => {
                 title="Add your first recipe"
                 accessibilityLabel="Click to add your first recipe"
             />
-            {recipes.map((recipe, index) => {
-                return <RecipeCard key={index} {...recipe} />;
-            })}
-            {/* CHange to flatlist? */}
+            <FlatList
+                data={recipes}
+                renderItem={({ item }) => <RecipeCard {...item} />}
+                keyExtractor={(item) => item.id}
+            />
             <Button onPress={clearDB} title="Clear db" />
         </View>
     );
