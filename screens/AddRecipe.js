@@ -8,6 +8,7 @@ import {
     ScrollView,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
+import uuid from 'react-native-uuid';
 
 import MultiInput from '../components/MultiInput';
 import { useGlobalContext } from '../context';
@@ -15,6 +16,7 @@ import { useGlobalContext } from '../context';
 const AddRecipe = () => {
     const { addRecipe } = useGlobalContext();
     const [newRecipe, setNewRecipe] = useState({
+        id: null,
         name: undefined,
         categories: [],
         prep_time: {
@@ -46,6 +48,7 @@ const AddRecipe = () => {
     const [value, setValue] = useState([]);
     const [ingredientFields, setIngredientFields] = useState([]);
     const [methodFields, setMethodFields] = useState([]);
+    const [id, setId] = useState(null);
 
     const formSubmit = () => {
         setSubmitted(false);
@@ -98,33 +101,10 @@ const AddRecipe = () => {
                 setError(undefined);
             }, 2000);
         } else {
-            addRecipe(newRecipe);
-            console.log('Submitted newRecipe: ', newRecipe);
-            setNewRecipe({
-                name: undefined,
-                categories: [],
-                prep_time: {
-                    hr: null,
-                    min: null,
-                },
-                cook_time: {
-                    hr: null,
-                    min: null,
-                },
-                servings: null,
-                description: undefined,
-                ingredients: [],
-                method: [],
-                notes: undefined,
-            });
-            setIngredientFields([]);
-            setMethodFields([]);
-            setValue([]);
-            setSubmitted(true);
-            setError(undefined);
-            setTimeout(() => {
-                setSubmitted(false);
-            }, 2000);
+            const newId = uuid.v4();
+            setNewRecipe({ ...newRecipe, id: newId });
+            setId(newId);
+            console.log('newId: ', newId);
         }
     };
 
@@ -145,6 +125,42 @@ const AddRecipe = () => {
             method: Object.values(methodFields),
         });
     }, [methodFields]);
+
+    useEffect(() => {
+        if (id) {
+            console.log('id: ', id);
+
+            addRecipe(newRecipe);
+            console.log('Submitted newRecipe: ', newRecipe);
+            setNewRecipe({
+                id: null,
+                name: undefined,
+                categories: [],
+                prep_time: {
+                    hr: null,
+                    min: null,
+                },
+                cook_time: {
+                    hr: null,
+                    min: null,
+                },
+                servings: null,
+                description: undefined,
+                ingredients: [],
+                method: [],
+                notes: undefined,
+            });
+            setIngredientFields([]);
+            setMethodFields([]);
+            setValue([]);
+            setId(null);
+            setSubmitted(true);
+            setError(undefined);
+            setTimeout(() => {
+                setSubmitted(false);
+            }, 2000);
+        }
+    }, [id]);
 
     return (
         <ScrollView nestedScrollEnabled={true}>

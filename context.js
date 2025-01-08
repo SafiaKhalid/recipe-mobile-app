@@ -39,14 +39,27 @@ const AppProvider = ({ children }) => {
                 JSON.stringify(newRecipe)
             );
             await db.closeAsync();
+            initDB();
             dispatch({ type: 'ADD_RECIPE', payload: newRecipe });
         } catch (error) {
             console.error('error:', error);
         }
     };
 
+    const clearDB = async () => {
+        try {
+            const db = await SQLite.openDatabaseAsync('recipedb');
+            await db.execAsync('DROP TABLE IF EXISTS recipes');
+            await db.closeAsync();
+            initDB();
+            dispatch({ type: 'CLEAR_DB' });
+        } catch (error) {
+            console.error('error:', error);
+        }
+    };
+
     return (
-        <AppContext.Provider value={{ ...state, initDB, addRecipe }}>
+        <AppContext.Provider value={{ ...state, initDB, addRecipe, clearDB }}>
             {children}
         </AppContext.Provider>
     );
