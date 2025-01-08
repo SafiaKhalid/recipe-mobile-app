@@ -49,10 +49,11 @@ const AppProvider = ({ children }) => {
     const deleteRecipe = async (recipe) => {
         try {
             const db = await SQLite.openDatabaseAsync('recipedb');
-            await runAsync(
-                'DELETE FROM recipes WHERE recipeObject = ?',
+            const dbRecipe = await db.getFirstAsync(
+                'SELECT * FROM recipes WHERE recipeObject = ?',
                 JSON.stringify(recipe)
             );
+            await db.runAsync('DELETE FROM recipes WHERE id = ?', dbRecipe.id);
             await db.closeAsync();
             initDB();
             dispatch({ type: 'DELETE_RECIPE', payload: recipe });
@@ -74,7 +75,9 @@ const AppProvider = ({ children }) => {
     };
 
     return (
-        <AppContext.Provider value={{ ...state, initDB, addRecipe, clearDB }}>
+        <AppContext.Provider
+            value={{ ...state, initDB, addRecipe, deleteRecipe, clearDB }}
+        >
             {children}
         </AppContext.Provider>
     );
