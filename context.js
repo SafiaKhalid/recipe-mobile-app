@@ -46,6 +46,21 @@ const AppProvider = ({ children }) => {
         }
     };
 
+    const deleteRecipe = async (recipe) => {
+        try {
+            const db = await SQLite.openDatabaseAsync('recipedb');
+            await runAsync(
+                'DELETE FROM recipes WHERE recipeObject = ?',
+                JSON.stringify(recipe)
+            );
+            await db.closeAsync();
+            initDB();
+            dispatch({ type: 'DELETE_RECIPE', payload: recipe });
+        } catch (error) {
+            console.error('error:', error);
+        }
+    };
+
     const clearDB = async () => {
         try {
             const db = await SQLite.openDatabaseAsync('recipedb');

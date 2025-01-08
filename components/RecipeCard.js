@@ -14,6 +14,10 @@ const RecipeCard = ({ name, categories, prep_time, cook_time }) => {
         }
     };
 
+    const handleDelete = () => {
+        console.log('delete');
+    };
+
     timeCheck(prep_time.hr, prepObject, 'hours');
     timeCheck(prep_time.min, prepObject, 'mins');
     timeCheck(cook_time.hr, cookObject, 'hours');
@@ -32,6 +36,7 @@ const RecipeCard = ({ name, categories, prep_time, cook_time }) => {
             {(cookObject.hours || cookObject.mins) && <Text>Cook Time</Text>}
             {cookObject.hours && <Text>Hours: {cookObject.hours}</Text>}
             {cookObject.mins && <Text>Mins: {cookObject.mins}</Text>}
+            <Button onPress={handleDelete} title="Delete" />
         </View>
     );
 };
