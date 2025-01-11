@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useGlobalContext } from '../context';
@@ -19,6 +20,7 @@ const ViewRecipe = () => {
     } = {
         ...currentRecipe,
     };
+    const [showAlert, setShowAlert] = useState(false);
 
     const prepObject = { hours: '', mins: '' };
     const cookObject = { hours: '', mins: '' };
@@ -36,6 +38,11 @@ const ViewRecipe = () => {
     const handleDelete = () => {
         navigation.goBack();
         deleteRecipe(recipes.find((recipe) => recipe.id == id));
+        setShowAlert(false);
+    };
+
+    const changeAlert = () => {
+        setShowAlert(!showAlert);
     };
 
     timeCheck(prep_time.hr, prepObject, 'hours');
@@ -80,7 +87,14 @@ const ViewRecipe = () => {
                     <Text>{notes}</Text>
                 </View>
             )}
-            <Button onPress={handleDelete} title="Delete" />
+            {showAlert && (
+                <View>
+                    <Text>Are you sure you want to delete this recipe?</Text>
+                    <Button onPress={handleDelete} title="Yes" />
+                    <Button onPress={changeAlert} title="No" />
+                </View>
+            )}
+            <Button onPress={changeAlert} title="Delete" />
         </View>
     );
 };
