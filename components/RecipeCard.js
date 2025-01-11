@@ -4,8 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useGlobalContext } from '../context';
 
 const RecipeCard = ({ recipe }) => {
-    const { recipes, currentRecipe, deleteRecipe, setCurrentRecipe } =
-        useGlobalContext();
+    const { setCurrentRecipe } = useGlobalContext();
     const { id, name, categories, prep_time, cook_time } = { ...recipe };
     const [focus, setFocus] = useState(undefined);
     const navigation = useNavigation();
@@ -21,10 +20,6 @@ const RecipeCard = ({ recipe }) => {
                 object[objectKey] = time;
             }
         }
-    };
-
-    const handleDelete = () => {
-        deleteRecipe(recipes.find((recipe) => recipe.id == id));
     };
 
     const handleView = () => {
@@ -51,7 +46,6 @@ const RecipeCard = ({ recipe }) => {
             {cookObject.hours && <Text>Hours: {cookObject.hours}</Text>}
             {cookObject.mins && <Text>Mins: {cookObject.mins}</Text>}
             <Button onPress={handleView} title="View Recipe" />
-            <Button onPress={handleDelete} title="Delete" />
         </View>
     );
 };
