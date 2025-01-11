@@ -27,7 +27,7 @@ const RecipeCard = ({ id, name, categories, prep_time, cook_time }) => {
     };
 
     const handleView = () => {
-        console.log('view');
+        navigation.navigate('View');
     };
 
     timeCheck(prep_time.hr, prepObject, 'hours');
