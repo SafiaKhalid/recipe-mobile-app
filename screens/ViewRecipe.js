@@ -1,14 +1,17 @@
 import { StyleSheet, View, Text, Button } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useGlobalContext } from '../context';
 
 const ViewRecipe = () => {
-    const { currentRecipe } = useGlobalContext();
+    const { recipes, currentRecipe, deleteRecipe } = useGlobalContext();
+    const navigation = useNavigation();
     const {
         id,
         name,
         categories,
         prep_time,
         cook_time,
+        servings,
         description,
         ingredients,
         method,
@@ -30,6 +33,11 @@ const ViewRecipe = () => {
         }
     };
 
+    const handleDelete = () => {
+        navigation.goBack();
+        deleteRecipe(recipes.find((recipe) => recipe.id == id));
+    };
+
     timeCheck(prep_time.hr, prepObject, 'hours');
     timeCheck(prep_time.min, prepObject, 'mins');
     timeCheck(cook_time.hr, cookObject, 'hours');
@@ -47,6 +55,12 @@ const ViewRecipe = () => {
             {(cookObject.hours || cookObject.mins) && <Text>Cook Time</Text>}
             {cookObject.hours && <Text>Hours: {cookObject.hours}</Text>}
             {cookObject.mins && <Text>Mins: {cookObject.mins}</Text>}
+            {servings && (
+                <View>
+                    <Text>Servings:</Text>
+                    <Text>{servings}</Text>
+                </View>
+            )}
             {description && <Text>{description}</Text>}
             <Text>Ingredients:</Text>
             {ingredients.map((ingredient, index) => {
@@ -66,6 +80,7 @@ const ViewRecipe = () => {
                     <Text>{notes}</Text>
                 </View>
             )}
+            <Button onPress={handleDelete} title="Delete" />
         </View>
     );
 };

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
 import { useGlobalContext } from '../context';
 
 const RecipeCard = ({ recipe }) => {
