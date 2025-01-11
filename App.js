@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AppProvider } from './context';
 import Home from './screens/Home';
 import AddRecipe from './screens/AddRecipe';
+import ViewRecipe from './screens/ViewRecipe';
 
 const HomeStack = createNativeStackNavigator({
     screens: {
@@ -34,6 +35,7 @@ const RootStack = createNativeStackNavigator({
             },
             screens: {
                 Add: AddRecipe,
+                View: ViewRecipe,
             },
         },
     },

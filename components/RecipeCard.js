@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { useGlobalContext } from '../context';
 
 const RecipeCard = ({ id, name, categories, prep_time, cook_time }) => {
     const { recipes, deleteRecipe } = useGlobalContext();
     const [focus, setFocus] = useState(undefined);
+    const navigation = useNavigation();
 
     const prepObject = { hours: '', mins: '' };
     const cookObject = { hours: '', mins: '' };
@@ -22,6 +24,10 @@ const RecipeCard = ({ id, name, categories, prep_time, cook_time }) => {
 
     const handleDelete = () => {
         deleteRecipe(recipes.find((recipe) => recipe.id == id));
+    };
+
+    const handleView = () => {
+        console.log('view');
     };
 
     timeCheck(prep_time.hr, prepObject, 'hours');
@@ -42,6 +48,7 @@ const RecipeCard = ({ id, name, categories, prep_time, cook_time }) => {
             {(cookObject.hours || cookObject.mins) && <Text>Cook Time</Text>}
             {cookObject.hours && <Text>Hours: {cookObject.hours}</Text>}
             {cookObject.mins && <Text>Mins: {cookObject.mins}</Text>}
+            <Button onPress={handleView} title="View Recipe" />
             <Button onPress={handleDelete} title="Delete" />
         </View>
     );
