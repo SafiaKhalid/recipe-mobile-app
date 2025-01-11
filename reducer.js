@@ -21,6 +21,8 @@ const reducer = (state, action) => {
             };
         case 'CLEAR_DB':
             return { ...state, recipes: [] };
+        case 'SET_CURRENT_RECIPE':
+            return { ...state, currentRecipe: action.payload };
         default:
             throw new Error('No matching type');
     }

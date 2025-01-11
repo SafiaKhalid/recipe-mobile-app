@@ -76,6 +76,7 @@ const AppProvider = ({ children }) => {
 
     const setCurrentRecipe = (recipe) => {
         console.log('CUrrent Recipe: ', recipe);
+        dispatch({ type: 'SET_CURRENT_RECIPE', payload: recipe });
     };
 
     return (
