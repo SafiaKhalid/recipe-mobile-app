@@ -32,7 +32,7 @@ const Home = () => {
             />
             <FlatList
                 data={recipes}
-                renderItem={({ item }) => <RecipeCard {...item} />}
+                renderItem={({ item }) => <RecipeCard recipe={item} />}
                 keyExtractor={(item) => item.id}
             />
             <Button onPress={clearDB} title="Clear db" />
