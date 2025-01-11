@@ -7,6 +7,7 @@ import { AppProvider } from './context';
 import Home from './screens/Home';
 import AddRecipe from './screens/AddRecipe';
 import ViewRecipe from './screens/ViewRecipe';
+import EditRecipe from './screens/EditRecipe';
 
 const HomeStack = createNativeStackNavigator({
     screens: {
@@ -36,6 +37,7 @@ const RootStack = createNativeStackNavigator({
             screens: {
                 Add: AddRecipe,
                 View: ViewRecipe,
+                Edit: EditRecipe,
             },
         },
     },
