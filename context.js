@@ -74,9 +74,20 @@ const AppProvider = ({ children }) => {
         }
     };
 
+    const setCurrentRecipe = (recipe) => {
+        console.log('CUrrent Recipe: ', recipe);
+    };
+
     return (
         <AppContext.Provider
-            value={{ ...state, initDB, addRecipe, deleteRecipe, clearDB }}
+            value={{
+                ...state,
+                initDB,
+                addRecipe,
+                deleteRecipe,
+                clearDB,
+                setCurrentRecipe,
+            }}
         >
             {children}
         </AppContext.Provider>

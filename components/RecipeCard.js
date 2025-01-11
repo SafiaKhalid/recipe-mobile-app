@@ -4,8 +4,10 @@ import { useNavigation } from '@react-navigation/native';
 
 import { useGlobalContext } from '../context';
 
-const RecipeCard = ({ id, name, categories, prep_time, cook_time }) => {
-    const { recipes, deleteRecipe } = useGlobalContext();
+const RecipeCard = ({ recipe }) => {
+    const { recipes, currentRecipe, deleteRecipe, setCurrentRecipe } =
+        useGlobalContext();
+    const { id, name, categories, prep_time, cook_time } = { ...recipe };
     const [focus, setFocus] = useState(undefined);
     const navigation = useNavigation();
 
@@ -27,6 +29,7 @@ const RecipeCard = ({ id, name, categories, prep_time, cook_time }) => {
     };
 
     const handleView = () => {
+        setCurrentRecipe(recipe);
         navigation.navigate('View');
     };
 

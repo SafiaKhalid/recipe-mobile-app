@@ -1,5 +1,6 @@
 const defaultState = {
     recipes: [],
+    currentRecipe: {},
 };
 
 const reducer = (state, action) => {
