@@ -35,6 +35,10 @@ const ViewRecipe = () => {
         }
     };
 
+    const handleEdit = () => {
+        navigation.navigate('Edit');
+    };
+
     const handleDelete = () => {
         navigation.goBack();
         deleteRecipe(recipes.find((recipe) => recipe.id == id));
@@ -94,7 +98,8 @@ const ViewRecipe = () => {
                     <Button onPress={changeAlert} title="No" />
                 </View>
             )}
-            <Button onPress={changeAlert} title="Delete" />
+            <Button onPress={handleEdit} title="Edit" />
+            {!showAlert && <Button onPress={changeAlert} title="Delete" />}
         </View>
     );
 };
