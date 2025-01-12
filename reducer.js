@@ -11,6 +11,18 @@ const reducer = (state, action) => {
         case 'ADD_RECIPE':
             console.log('Recipe added to db');
             return { ...state, recipes: [...state.recipes, action.payload] };
+        case 'UPDATE_RECIPE':
+            console.log('Recipe updated');
+            recipesCopy = [...state.recipes];
+            const index = recipesCopy.findIndex(
+                (recipe) => recipe.id == action.payload.id
+            );
+            recipesCopy[index] = action.payload;
+            return {
+                ...state,
+                currentRecipe: { ...action.payload },
+                recipes: [...recipesCopy],
+            };
         case 'DELETE_RECIPE':
             console.log('Recipe deleted from db');
             return {

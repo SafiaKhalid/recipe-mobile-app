@@ -46,6 +46,33 @@ const AppProvider = ({ children }) => {
         }
     };
 
+    const updateRecipe = async (updatedRecipe) => {
+        try {
+            const oldRecipe = state.recipes.filter(
+                (recipe) => recipe.id == updatedRecipe.id
+            )[0];
+            console.log('old recipe: ', oldRecipe);
+
+            const db = await SQLite.openDatabaseAsync('recipedb');
+            const dbRecipe = await db.getFirstAsync(
+                'SELECT * FROM recipes WHERE recipeObject = ?',
+                JSON.stringify(oldRecipe)
+            );
+            console.log('db updated recipe: ', dbRecipe);
+
+            await db.runAsync(
+                'UPDATE recipes SET recipeObject = ? WHERE id = ?',
+                JSON.stringify(updatedRecipe),
+                dbRecipe.id
+            );
+            await db.closeAsync();
+            initDB();
+            dispatch({ type: 'UPDATE_RECIPE', payload: updatedRecipe });
+        } catch (error) {
+            console.error('error:', error);
+        }
+    };
+
     const deleteRecipe = async (recipe) => {
         try {
             const db = await SQLite.openDatabaseAsync('recipedb');
@@ -85,6 +112,7 @@ const AppProvider = ({ children }) => {
                 ...state,
                 initDB,
                 addRecipe,
+                updateRecipe,
                 deleteRecipe,
                 clearDB,
                 setCurrentRecipe,
