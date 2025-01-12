@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import uuid from 'react-native-uuid';
+import * as ImagePicker from 'expo-image-picker';
 
 import MultiInput from '../components/MultiInput';
 import { useGlobalContext } from '../context';
@@ -50,6 +51,7 @@ const AddRecipe = () => {
     const [ingredientFields, setIngredientFields] = useState([]);
     const [methodFields, setMethodFields] = useState([]);
     const [id, setId] = useState(null);
+    const [image, setImage] = useState(null);
 
     const formSubmit = () => {
         setSubmitted(false);
