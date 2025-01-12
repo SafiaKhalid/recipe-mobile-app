@@ -42,13 +42,26 @@ const Home = () => {
         );
     }
 
+    if (recipeList.length < 1) {
+        return (
+            <View>
+                <Text>My Recipes</Text>
+                <Text>No recipes added (yet)</Text>
+                <Button
+                    onPress={addRecipeHandle}
+                    title="Add your first recipe"
+                    accessibilityLabel="Click to add your first recipe"
+                />
+            </View>
+        );
+    }
+
     return (
         <View>
             <Text>My Recipes</Text>
-            <Text>No recipes added (yet)</Text>
             <Button
                 onPress={addRecipeHandle}
-                title="Add your first recipe"
+                title="Add recipe"
                 accessibilityLabel="Click to add your first recipe"
             />
             <Text>Sort by:</Text>
