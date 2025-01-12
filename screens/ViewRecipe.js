@@ -9,6 +9,7 @@ const ViewRecipe = () => {
     const {
         id,
         name,
+        timeStamp,
         categories,
         prep_time,
         cook_time,
@@ -57,6 +58,8 @@ const ViewRecipe = () => {
     return (
         <View>
             <Text>{name}</Text>
+            <Text>Date created:</Text>
+            <Text>{timeStamp}</Text>
             {categories.map((category, index) => {
                 return <Text key={index}>{category}</Text>;
             })}

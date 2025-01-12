@@ -18,6 +18,7 @@ const AddRecipe = () => {
     const [newRecipe, setNewRecipe] = useState({
         id: null,
         name: undefined,
+        timeStamp: null,
         categories: [],
         prep_time: {
             hr: null,
@@ -52,6 +53,8 @@ const AddRecipe = () => {
 
     const formSubmit = () => {
         setSubmitted(false);
+        const date = new Date().toLocaleDateString();
+
         if (!newRecipe.name) {
             setError(undefined);
             setError('Recipe name is required');
@@ -102,7 +105,7 @@ const AddRecipe = () => {
             }, 2000);
         } else {
             const newId = uuid.v4();
-            setNewRecipe({ ...newRecipe, id: newId });
+            setNewRecipe({ ...newRecipe, id: newId, timeStamp: date });
             setId(newId);
             console.log('newId: ', newId);
         }
@@ -135,6 +138,7 @@ const AddRecipe = () => {
             setNewRecipe({
                 id: null,
                 name: undefined,
+                timeStamp: null,
                 categories: [],
                 prep_time: {
                     hr: null,
