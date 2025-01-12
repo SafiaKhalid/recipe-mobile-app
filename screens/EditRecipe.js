@@ -9,6 +9,8 @@ import {
     Image,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
+import * as ImagePicker from 'expo-image-picker';
+
 import MultiInput from '../components/MultiInput';
 import { useGlobalContext } from '../context';
 
@@ -32,6 +34,7 @@ const EditRecipe = () => {
     const [methodFields, setMethodFields] = useState([...currentRecipe.method]);
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState(undefined);
+    const [image, setImage] = useState(currentRecipe.image);
 
     const formSubmit = () => {
         setSubmitted(false);
@@ -98,6 +101,20 @@ const EditRecipe = () => {
         }
     };
 
+    const addImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ['images'],
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 1,
+        });
+
+        console.log('image result: ', result);
+        if (!result.canceled) {
+            setImage(result.assets[0].uri);
+        }
+    };
+
     useEffect(() => {
         setUpdatedRecipe({ ...updatedRecipe, categories: value });
     }, [value]);
@@ -115,6 +132,10 @@ const EditRecipe = () => {
             method: Object.values(methodFields),
         });
     }, [methodFields]);
+
+    useEffect(() => {
+        setUpdatedRecipe({ ...updatedRecipe, image: image });
+    }, [image]);
 
     return (
         <ScrollView>
@@ -256,15 +277,12 @@ const EditRecipe = () => {
                 />
             </View>
             <View>
-                {/* <Button
+                <Button
                     title="Select image from camera roll"
                     onPress={addImage}
-                /> */}
-                {updatedRecipe.image && (
-                    <Image
-                        source={{ uri: updatedRecipe.image }}
-                        style={styles.image}
-                    />
+                />
+                {image && (
+                    <Image source={{ uri: image }} style={styles.image} />
                 )}
             </View>
 
