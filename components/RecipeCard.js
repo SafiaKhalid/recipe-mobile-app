@@ -5,7 +5,9 @@ import { useGlobalContext } from '../context';
 
 const RecipeCard = ({ recipe }) => {
     const { setCurrentRecipe } = useGlobalContext();
-    const { id, name, categories, prep_time, cook_time } = { ...recipe };
+    const { id, name, timeStamp, categories, prep_time, cook_time } = {
+        ...recipe,
+    };
     const [focus, setFocus] = useState(undefined);
     const navigation = useNavigation();
 
@@ -35,6 +37,7 @@ const RecipeCard = ({ recipe }) => {
     return (
         <View>
             <Text>{name}</Text>
+            <Text>{timeStamp}</Text>
             <Text>Categories: </Text>
             {categories.map((category, index) => {
                 return <Text key={index}>{category}</Text>;
