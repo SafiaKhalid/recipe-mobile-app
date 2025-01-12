@@ -29,8 +29,7 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "This app accesses your photos to add them to your recipes.",
-          "cameraPermission": "This app accesses you camera to take pictures of your recipes."
+          "photosPermission": "This app accesses your photos to add them to your recipes."          
         }
       ]
     ]
