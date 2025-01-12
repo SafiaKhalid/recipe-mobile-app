@@ -6,15 +6,17 @@ import {
     View,
     Button,
     ScrollView,
+    Image,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import uuid from 'react-native-uuid';
+import * as ImagePicker from 'expo-image-picker';
 
 import MultiInput from '../components/MultiInput';
 import { useGlobalContext } from '../context';
 
 const AddRecipe = () => {
-    const { addRecipe } = useGlobalContext();
+    const { addRecipe, addImage } = useGlobalContext();
     const [newRecipe, setNewRecipe] = useState({
         id: null,
         name: undefined,
@@ -33,6 +35,7 @@ const AddRecipe = () => {
         ingredients: [],
         method: [],
         notes: undefined,
+        image: null,
     });
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState(undefined);
@@ -50,6 +53,7 @@ const AddRecipe = () => {
     const [ingredientFields, setIngredientFields] = useState([]);
     const [methodFields, setMethodFields] = useState([]);
     const [id, setId] = useState(null);
+    const [image, setImage] = useState(null);
 
     const formSubmit = () => {
         setSubmitted(false);
@@ -130,6 +134,10 @@ const AddRecipe = () => {
     }, [methodFields]);
 
     useEffect(() => {
+        setNewRecipe({ ...newRecipe, image: image });
+    }, [image]);
+
+    useEffect(() => {
         if (id) {
             console.log('id: ', id);
 
@@ -153,6 +161,7 @@ const AddRecipe = () => {
                 ingredients: [],
                 method: [],
                 notes: undefined,
+                image: null,
             });
             setIngredientFields([]);
             setMethodFields([]);
@@ -160,6 +169,7 @@ const AddRecipe = () => {
             setId(null);
             setSubmitted(true);
             setError(undefined);
+            setImage(null);
             setTimeout(() => {
                 setSubmitted(false);
             }, 2000);
@@ -305,6 +315,15 @@ const AddRecipe = () => {
                         numberOfLines={4}
                     />
                 </View>
+                <View>
+                    <Button
+                        title="Select image from camera roll"
+                        onPress={addImage}
+                    />
+                    {image && (
+                        <Image source={{ uri: image }} style={styles.image} />
+                    )}
+                </View>
                 <Button onPress={formSubmit} title="Add Recipe" />
                 {submitted && <Text>New recipe added!</Text>}
                 {error && <Text>{error}</Text>}
@@ -320,5 +339,9 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 100,
         backgroundColor: 'red',
+    },
+    image: {
+        width: 200,
+        height: 200,
     },
 });

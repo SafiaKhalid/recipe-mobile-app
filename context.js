@@ -106,6 +106,20 @@ const AppProvider = ({ children }) => {
         dispatch({ type: 'SET_CURRENT_RECIPE', payload: recipe });
     };
 
+    const addImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ['images'],
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 1,
+        });
+
+        console.log('image result: ', result);
+        if (!result.canceled) {
+            setImage(result.assets[0].uri);
+        }
+    };
+
     return (
         <AppContext.Provider
             value={{
@@ -116,6 +130,7 @@ const AppProvider = ({ children }) => {
                 deleteRecipe,
                 clearDB,
                 setCurrentRecipe,
+                addImage,
             }}
         >
             {children}

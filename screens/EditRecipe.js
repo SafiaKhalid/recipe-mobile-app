@@ -6,13 +6,16 @@ import {
     View,
     Button,
     ScrollView,
+    Image,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
+import * as ImagePicker from 'expo-image-picker';
+
 import MultiInput from '../components/MultiInput';
 import { useGlobalContext } from '../context';
 
 const EditRecipe = () => {
-    const { currentRecipe, updateRecipe } = useGlobalContext();
+    const { currentRecipe, updateRecipe, addImage } = useGlobalContext();
     const [updatedRecipe, setUpdatedRecipe] = useState({ ...currentRecipe });
     const [tags, setTags] = useState([
         { label: 'Breakfast', value: 'breakfast' },
@@ -31,6 +34,7 @@ const EditRecipe = () => {
     const [methodFields, setMethodFields] = useState([...currentRecipe.method]);
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState(undefined);
+    const [image, setImage] = useState(currentRecipe.image);
 
     const formSubmit = () => {
         setSubmitted(false);
@@ -114,6 +118,10 @@ const EditRecipe = () => {
             method: Object.values(methodFields),
         });
     }, [methodFields]);
+
+    useEffect(() => {
+        setUpdatedRecipe({ ...updatedRecipe, image: image });
+    }, [image]);
 
     return (
         <ScrollView>
@@ -254,6 +262,16 @@ const EditRecipe = () => {
                     numberOfLines={4}
                 />
             </View>
+            <View>
+                <Button
+                    title="Select image from camera roll"
+                    onPress={addImage}
+                />
+                {image && (
+                    <Image source={{ uri: image }} style={styles.image} />
+                )}
+            </View>
+
             <Button onPress={formSubmit} title="Edit Recipe" />
             {submitted && <Text>Recipe updated!</Text>}
             {error && <Text>{error}</Text>}
@@ -262,3 +280,10 @@ const EditRecipe = () => {
 };
 
 export default EditRecipe;
+
+const styles = StyleSheet.create({
+    image: {
+        width: 200,
+        height: 200,
+    },
+});
