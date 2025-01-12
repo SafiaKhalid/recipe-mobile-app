@@ -1,4 +1,5 @@
 const defaultState = {
+    loading: true,
     recipes: [],
     currentRecipe: {},
 };
