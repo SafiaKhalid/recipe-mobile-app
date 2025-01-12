@@ -6,6 +6,7 @@ import {
     View,
     Button,
     ScrollView,
+    Image,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import MultiInput from '../components/MultiInput';
@@ -254,6 +255,19 @@ const EditRecipe = () => {
                     numberOfLines={4}
                 />
             </View>
+            <View>
+                {/* <Button
+                    title="Select image from camera roll"
+                    onPress={addImage}
+                /> */}
+                {updatedRecipe.image && (
+                    <Image
+                        source={{ uri: updatedRecipe.image }}
+                        style={styles.image}
+                    />
+                )}
+            </View>
+
             <Button onPress={formSubmit} title="Edit Recipe" />
             {submitted && <Text>Recipe updated!</Text>}
             {error && <Text>{error}</Text>}
@@ -262,3 +276,10 @@ const EditRecipe = () => {
 };
 
 export default EditRecipe;
+
+const styles = StyleSheet.create({
+    image: {
+        width: 200,
+        height: 200,
+    },
+});
