@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, Button, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useGlobalContext } from '../context';
 
@@ -18,6 +18,7 @@ const ViewRecipe = () => {
         ingredients,
         method,
         notes,
+        image,
     } = {
         ...currentRecipe,
     };
@@ -58,6 +59,7 @@ const ViewRecipe = () => {
     return (
         <View>
             <Text>{name}</Text>
+            {image && <Image source={{ uri: image }} style={styles.image} />}
             <Text>Date created:</Text>
             <Text>{timeStamp}</Text>
             {categories.map((category, index) => {
@@ -108,3 +110,10 @@ const ViewRecipe = () => {
 };
 
 export default ViewRecipe;
+
+const styles = StyleSheet.create({
+    image: {
+        width: 200,
+        height: 200,
+    },
+});
