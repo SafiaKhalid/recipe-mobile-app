@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, Button, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faUtensils } from '@fortawesome/free-solid-svg-icons/faUtensils';
 
 import { useGlobalContext } from '../context';
 
@@ -9,7 +11,6 @@ const RecipeCard = ({ recipe }) => {
     const { id, name, timeStamp, categories, prep_time, cook_time, image } = {
         ...recipe,
     };
-    const [focus, setFocus] = useState(undefined);
     const navigation = useNavigation();
 
     const prepObject = { hours: '', mins: '' };
@@ -38,7 +39,11 @@ const RecipeCard = ({ recipe }) => {
     return (
         <View>
             <Text>{name}</Text>
-            {image && <Image source={{ uri: image }} style={styles.image} />}
+            {image ? (
+                <Image source={{ uri: image }} style={styles.image} />
+            ) : (
+                <FontAwesomeIcon icon={faUtensils} />
+            )}
             <Text>{timeStamp}</Text>
             <Text>Categories: </Text>
             {categories.map((category, index) => {

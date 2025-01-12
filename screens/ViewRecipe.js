@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, Button, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faUtensils } from '@fortawesome/free-solid-svg-icons/faUtensils';
+
 import { useGlobalContext } from '../context';
 
 const ViewRecipe = () => {
@@ -59,7 +62,11 @@ const ViewRecipe = () => {
     return (
         <View>
             <Text>{name}</Text>
-            {image && <Image source={{ uri: image }} style={styles.image} />}
+            {image ? (
+                <Image source={{ uri: image }} style={styles.image} />
+            ) : (
+                <FontAwesomeIcon icon={faUtensils} />
+            )}
             <Text>Date created:</Text>
             <Text>{timeStamp}</Text>
             {categories.map((category, index) => {
