@@ -1,4 +1,5 @@
 const defaultState = {
+    loading: true,
     recipes: [],
     currentRecipe: {},
 };
@@ -7,7 +8,7 @@ const reducer = (state, action) => {
     switch (action.type) {
         case 'INIT_DB':
             console.log('Db initialised');
-            return { ...state, recipes: [...action.payload] };
+            return { ...state, loading: false, recipes: [...action.payload] };
         case 'ADD_RECIPE':
             console.log('Recipe added to db');
             return { ...state, recipes: [...state.recipes, action.payload] };

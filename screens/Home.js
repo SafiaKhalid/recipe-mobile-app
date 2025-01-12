@@ -6,7 +6,7 @@ import { useGlobalContext } from '../context';
 import RecipeCard from '../components/RecipeCard';
 
 const Home = () => {
-    const { initDB, recipes, clearDB } = useGlobalContext();
+    const { loading, initDB, recipes, clearDB } = useGlobalContext();
     const navigation = useNavigation();
 
     useEffect(() => {
@@ -20,6 +20,14 @@ const Home = () => {
     const addRecipeHandle = () => {
         navigation.navigate('Add');
     };
+
+    if (loading) {
+        return (
+            <View>
+                <Text>Loading...</Text>
+            </View>
+        );
+    }
 
     return (
         <View>
