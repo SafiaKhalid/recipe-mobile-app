@@ -10,7 +10,7 @@ const Home = () => {
     const { loading, initDB, recipes, clearDB } = useGlobalContext();
     const navigation = useNavigation();
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
+    const [value, setValue] = useState('aToZ');
     const [items, setItems] = useState([
         { label: 'Date (newest)', value: 'dateDes' },
         { label: 'Date (oldest)', value: 'dateAsc' },
@@ -19,8 +19,7 @@ const Home = () => {
         { label: 'Time (most)', value: 'timeDes' },
         { label: 'Time (least)', value: 'timeAsc' },
     ]);
-
-    const recipeList = [...recipes];
+    const [recipeList, setRecipeList] = useState(recipes);
 
     useEffect(() => {
         initDB();
@@ -28,7 +27,59 @@ const Home = () => {
 
     useEffect(() => {
         console.log('Recipes reducer: ', recipes);
+        console.log('recipeList: ', recipeList);
+        setRecipeList(recipes);
     }, [recipes]);
+
+    //Time sorting doesn't work, if no time put at bottom for both time asc and des
+    /*  useEffect(() => {
+        switch (value) {
+            case 'dateDes':
+                setRecipeList(
+                    [...recipeList].sort(
+                        (a, b) => new Date(b.timeStamp) - new Date(a.timeStamp)
+                    )
+                );
+                break;
+            case 'dateAsc':
+                setRecipeList(
+                    [...recipeList].sort(
+                        (a, b) => new Date(a.timeStamp) - new Date(b.timeStamp)
+                    )
+                );
+                break;
+            case 'aToZ':
+                setRecipeList(
+                    [...recipeList].sort((a, b) => a.name.localeCompare(b.name))
+                );
+                break;
+            case 'zToA':
+                setRecipeList(
+                    [...recipeList].sort((a, b) => b.name.localeCompare(a.name))
+                );
+                break;
+            case 'timeAsc':
+                setRecipeList(
+                    [...recipeList].sort((a, b) =>
+                        (a.prep_time + a.cook_time).localeCompare(
+                            b.prep_time + b.cook_time
+                        )
+                    )
+                );
+                break;
+            case 'timeDes':
+                setRecipeList(
+                    [...recipeList].sort((a, b) =>
+                        (b.prep_time + b.cook_time).localeCompare(
+                            a.prep_time + a.cook_time
+                        )
+                    )
+                );
+                break;
+            default:
+                console.error('no matching sort option');
+        }
+    }, [value]); */
 
     const addRecipeHandle = () => {
         navigation.navigate('Add');
