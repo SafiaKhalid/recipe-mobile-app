@@ -1,6 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, View, Text, Button, FlatList } from 'react-native';
+import {
+    StyleSheet,
+    ScrollView,
+    View,
+    Text,
+    Button,
+    FlatList,
+    VirtualizedList,
+} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import { useGlobalContext } from '../context';
@@ -108,7 +116,7 @@ const Home = () => {
     }
 
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             <Text>My Recipes</Text>
             <Button
                 onPress={addRecipeHandle}
@@ -123,6 +131,7 @@ const Home = () => {
                 setOpen={setOpen}
                 setValue={setValue}
                 setItems={setItems}
+                listMode="SCROLLVIEW"
             />
             <FlatList
                 data={recipeList}
