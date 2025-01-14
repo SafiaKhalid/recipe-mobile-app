@@ -7,13 +7,13 @@ const defaultState = {
 const reducer = (state, action) => {
     switch (action.type) {
         case 'INIT_DB':
-            console.log('Db initialised');
+            /* console.log('Db initialised'); */
             return { ...state, loading: false, recipes: [...action.payload] };
         case 'ADD_RECIPE':
-            console.log('Recipe added to db');
+            /* console.log('Recipe added to db'); */
             return { ...state, recipes: [...state.recipes, action.payload] };
         case 'UPDATE_RECIPE':
-            console.log('Recipe updated');
+            /* console.log('Recipe updated'); */
             recipesCopy = [...state.recipes];
             const index = recipesCopy.findIndex(
                 (recipe) => recipe.id == action.payload.id
@@ -25,7 +25,7 @@ const reducer = (state, action) => {
                 recipes: [...recipesCopy],
             };
         case 'DELETE_RECIPE':
-            console.log('Recipe deleted from db');
+            /* console.log('Recipe deleted from db'); */
             return {
                 ...state,
                 recipes: state.recipes.filter(

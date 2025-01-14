@@ -1,14 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import {
-    StyleSheet,
-    ScrollView,
-    View,
-    Text,
-    Button,
-    FlatList,
-    VirtualizedList,
-} from 'react-native';
+import { StyleSheet, View, Text, Button, FlatList } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import { useGlobalContext } from '../context';
@@ -17,6 +9,7 @@ import RecipeCard from '../components/RecipeCard';
 const Home = () => {
     const { loading, initDB, recipes, clearDB } = useGlobalContext();
     const navigation = useNavigation();
+    const [recipeList, setRecipeList] = useState([...recipes]);
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('aToZ');
     const [items, setItems] = useState([
@@ -27,48 +20,42 @@ const Home = () => {
         { label: 'Time (most)', value: 'timeDes' },
         { label: 'Time (least)', value: 'timeAsc' },
     ]);
-    const [recipeList, setRecipeList] = useState(recipes);
 
     useEffect(() => {
         initDB();
     }, []);
-
-    useEffect(() => {
-        console.log('Recipes reducer: ', recipes);
-        console.log('recipeList: ', recipeList);
-        setRecipeList(recipes);
-    }, [recipes]);
-
     //Time sorting doesn't work, if no time put at bottom for both time asc and des
-    /*  useEffect(() => {
+    useEffect(() => {
+        console.log('value: ', value);
+
         switch (value) {
             case 'dateDes':
                 setRecipeList(
-                    [...recipeList].sort(
+                    [...recipes].sort(
                         (a, b) => new Date(b.timeStamp) - new Date(a.timeStamp)
                     )
                 );
                 break;
             case 'dateAsc':
                 setRecipeList(
-                    [...recipeList].sort(
+                    [...recipes].sort(
                         (a, b) => new Date(a.timeStamp) - new Date(b.timeStamp)
                     )
                 );
                 break;
             case 'aToZ':
                 setRecipeList(
-                    [...recipeList].sort((a, b) => a.name.localeCompare(b.name))
+                    [...recipes].sort((a, b) => a.name.localeCompare(b.name))
                 );
                 break;
             case 'zToA':
                 setRecipeList(
-                    [...recipeList].sort((a, b) => b.name.localeCompare(a.name))
+                    [...recipes].sort((a, b) => b.name.localeCompare(a.name))
                 );
                 break;
             case 'timeAsc':
                 setRecipeList(
-                    [...recipeList].sort((a, b) =>
+                    [...recipes].sort((a, b) =>
                         (a.prep_time + a.cook_time).localeCompare(
                             b.prep_time + b.cook_time
                         )
@@ -77,7 +64,7 @@ const Home = () => {
                 break;
             case 'timeDes':
                 setRecipeList(
-                    [...recipeList].sort((a, b) =>
+                    [...recipes].sort((a, b) =>
                         (b.prep_time + b.cook_time).localeCompare(
                             a.prep_time + a.cook_time
                         )
@@ -87,7 +74,7 @@ const Home = () => {
             default:
                 console.error('no matching sort option');
         }
-    }, [value]); */
+    }, [value, recipes]);
 
     const addRecipeHandle = () => {
         navigation.navigate('Add');
