@@ -30,17 +30,19 @@ const Home = () => {
 
         switch (value) {
             case 'dateDes':
+                recipeList.forEach((recipe) => {
+                    console.log(new Date(recipe.timeStamp));
+                });
                 setRecipeList(
-                    [...recipes].sort(
-                        (a, b) => new Date(b.timeStamp) - new Date(a.timeStamp)
-                    )
+                    [...recipes].sort((a, b) => b.timeStamp - a.timeStamp)
                 );
                 break;
             case 'dateAsc':
+                recipeList.forEach((recipe) => {
+                    console.log(new Date(recipe.timeStamp));
+                });
                 setRecipeList(
-                    [...recipes].sort(
-                        (a, b) => new Date(a.timeStamp) - new Date(b.timeStamp)
-                    )
+                    [...recipes].sort((a, b) => a.timeStamp - b.timeStamp)
                 );
                 break;
             case 'aToZ':
