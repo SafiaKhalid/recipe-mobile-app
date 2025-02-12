@@ -17,7 +17,7 @@ const AppProvider = ({ children }) => {
             const rows = await db.getAllAsync(
                 'SELECT id, recipeObject FROM recipes'
             );
-            console.log('rows: ', rows);
+            /* console.log('rows: ', rows); */
             await db.closeAsync();
             let recipeList = [];
             if (rows.length > 0) {
@@ -51,14 +51,14 @@ const AppProvider = ({ children }) => {
             const oldRecipe = state.recipes.filter(
                 (recipe) => recipe.id == updatedRecipe.id
             )[0];
-            console.log('old recipe: ', oldRecipe);
+            /* console.log('old recipe: ', oldRecipe); */
 
             const db = await SQLite.openDatabaseAsync('recipedb');
             const dbRecipe = await db.getFirstAsync(
                 'SELECT * FROM recipes WHERE recipeObject = ?',
                 JSON.stringify(oldRecipe)
             );
-            console.log('db updated recipe: ', dbRecipe);
+            /* console.log('db updated recipe: ', dbRecipe); */
 
             await db.runAsync(
                 'UPDATE recipes SET recipeObject = ? WHERE id = ?',
@@ -102,22 +102,8 @@ const AppProvider = ({ children }) => {
     };
 
     const setCurrentRecipe = (recipe) => {
-        console.log('CUrrent Recipe: ', recipe);
+        /* console.log('CUrrent Recipe: ', recipe); */
         dispatch({ type: 'SET_CURRENT_RECIPE', payload: recipe });
-    };
-
-    const addImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ['images'],
-            allowsEditing: true,
-            aspect: [1, 1],
-            quality: 1,
-        });
-
-        console.log('image result: ', result);
-        if (!result.canceled) {
-            setImage(result.assets[0].uri);
-        }
     };
 
     return (
@@ -130,7 +116,6 @@ const AppProvider = ({ children }) => {
                 deleteRecipe,
                 clearDB,
                 setCurrentRecipe,
-                addImage,
             }}
         >
             {children}

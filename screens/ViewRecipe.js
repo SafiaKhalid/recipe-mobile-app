@@ -68,7 +68,7 @@ const ViewRecipe = () => {
                 <FontAwesomeIcon icon={faUtensils} />
             )}
             <Text>Date created:</Text>
-            <Text>{timeStamp}</Text>
+            <Text>{new Date(timeStamp).toLocaleDateString()}</Text>
             {categories.map((category, index) => {
                 return <Text key={index}>{category}</Text>;
             })}

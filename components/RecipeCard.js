@@ -44,7 +44,7 @@ const RecipeCard = ({ recipe }) => {
             ) : (
                 <FontAwesomeIcon icon={faUtensils} />
             )}
-            <Text>{timeStamp}</Text>
+            <Text>{new Date(timeStamp).toLocaleDateString()}</Text>
             <Text>Categories: </Text>
             {categories.map((category, index) => {
                 return <Text key={index}>{category}</Text>;

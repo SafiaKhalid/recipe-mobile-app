@@ -15,7 +15,7 @@ import MultiInput from '../components/MultiInput';
 import { useGlobalContext } from '../context';
 
 const EditRecipe = () => {
-    const { currentRecipe, updateRecipe, addImage } = useGlobalContext();
+    const { currentRecipe, updateRecipe } = useGlobalContext();
     const [updatedRecipe, setUpdatedRecipe] = useState({ ...currentRecipe });
     const [tags, setTags] = useState([
         { label: 'Breakfast', value: 'breakfast' },
@@ -98,6 +98,20 @@ const EditRecipe = () => {
             setTimeout(() => {
                 setSubmitted(false);
             }, 2000);
+        }
+    };
+
+    const addImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ['images'],
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 1,
+        });
+
+        console.log('image result: ', result);
+        if (!result.canceled) {
+            setImage(result.assets[0].uri);
         }
     };
 
