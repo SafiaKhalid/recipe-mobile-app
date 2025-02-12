@@ -31,18 +31,26 @@ const Home = () => {
         switch (value) {
             case 'dateDes':
                 recipeList.forEach((recipe) => {
+                    console.log(
+                        new Date(recipe.timeStamp).toLocaleDateString()
+                    );
+
                     console.log(new Date(recipe.timeStamp));
                 });
                 setRecipeList(
-                    [...recipes].sort((a, b) => b.timeStamp - a.timeStamp)
+                    [...recipes].sort(
+                        (a, b) => new Date(b.timeStamp) - new Date(a.timeStamp)
+                    )
                 );
                 break;
             case 'dateAsc':
                 recipeList.forEach((recipe) => {
-                    console.log(new Date(recipe.timeStamp));
+                    console.log(new Date(recipe.timeStamp.toString()));
                 });
                 setRecipeList(
-                    [...recipes].sort((a, b) => a.timeStamp - b.timeStamp)
+                    [...recipes].sort(
+                        (a, b) => new Date(a.timeStamp) - new Date(b.timeStamp)
+                    )
                 );
                 break;
             case 'aToZ':

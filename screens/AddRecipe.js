@@ -57,7 +57,7 @@ const AddRecipe = () => {
 
     const formSubmit = () => {
         setSubmitted(false);
-        const date = new Date().toLocaleDateString();
+        const date = new Date();
 
         if (!newRecipe.name) {
             setError(undefined);
