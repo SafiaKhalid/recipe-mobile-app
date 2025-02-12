@@ -24,19 +24,12 @@ const Home = () => {
     useEffect(() => {
         initDB();
     }, []);
-    //Time sorting doesn't work, if no time put at bottom for both time asc and des
+
     useEffect(() => {
         console.log('value: ', value);
 
         switch (value) {
             case 'dateDes':
-                recipeList.forEach((recipe) => {
-                    console.log(
-                        new Date(recipe.timeStamp).toLocaleDateString()
-                    );
-
-                    console.log(new Date(recipe.timeStamp));
-                });
                 setRecipeList(
                     [...recipes].sort(
                         (a, b) => new Date(b.timeStamp) - new Date(a.timeStamp)
@@ -44,9 +37,6 @@ const Home = () => {
                 );
                 break;
             case 'dateAsc':
-                recipeList.forEach((recipe) => {
-                    console.log(new Date(recipe.timeStamp.toString()));
-                });
                 setRecipeList(
                     [...recipes].sort(
                         (a, b) => new Date(a.timeStamp) - new Date(b.timeStamp)
@@ -65,19 +55,27 @@ const Home = () => {
                 break;
             case 'timeAsc':
                 setRecipeList(
-                    [...recipes].sort((a, b) =>
-                        (a.prep_time + a.cook_time).localeCompare(
-                            b.prep_time + b.cook_time
-                        )
+                    [...recipes].sort(
+                        (a, b) =>
+                            (a.prep_time.hr + a.cook_time.hr) * 60 +
+                            (a.prep_time.min + a.cook_time.min) -
+                            ((b.prep_time.hr + b.cook_time.hr) * 60 +
+                                (b.prep_time.min + b.cook_time.min))
                     )
                 );
                 break;
             case 'timeDes':
                 setRecipeList(
-                    [...recipes].sort((a, b) =>
-                        (b.prep_time + b.cook_time).localeCompare(
-                            a.prep_time + a.cook_time
-                        )
+                    [...recipes].sort(
+                        (a, b) =>
+                            (Number(b.prep_time.hr) + Number(b.cook_time.hr)) *
+                                60 +
+                            (Number(b.prep_time.min) +
+                                Number(b.cook_time.min)) -
+                            ((Number(a.prep_time.hr) + Number(a.cook_time.hr)) *
+                                60 +
+                                (Number(a.prep_time.min) +
+                                    Number(a.cook_time.min)))
                     )
                 );
                 break;

@@ -36,8 +36,6 @@ const RecipeCard = ({ recipe }) => {
     timeCheck(cook_time.hr, cookObject, 'hours');
     timeCheck(cook_time.min, cookObject, 'mins');
 
-    const dateMade = new Date(timeStamp).toLocaleDateString();
-
     return (
         <View>
             <Text>{name}</Text>
@@ -46,7 +44,7 @@ const RecipeCard = ({ recipe }) => {
             ) : (
                 <FontAwesomeIcon icon={faUtensils} />
             )}
-            <Text>{dateMade}</Text>
+            <Text>{new Date(timeStamp).toLocaleDateString()}</Text>
             <Text>Categories: </Text>
             {categories.map((category, index) => {
                 return <Text key={index}>{category}</Text>;
