@@ -11,7 +11,7 @@ const Home = () => {
     const navigation = useNavigation();
     const [recipeList, setRecipeList] = useState([...recipes]);
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState('aToZ');
+    const [value, setValue] = useState('dateDes');
     const [items, setItems] = useState([
         { label: 'Date (newest)', value: 'dateDes' },
         { label: 'Date (oldest)', value: 'dateAsc' },
